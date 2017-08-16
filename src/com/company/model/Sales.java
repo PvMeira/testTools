@@ -15,6 +15,8 @@ public class Sales extends Entity {
 
     private String salesmanName;
 
+    private Double totalValue;
+
     public Sales(Long id, Long idSale, Long idItem, Integer quantity, Double price, String salesmanName) {
         super(id);
         this.idSale = idSale;
@@ -73,5 +75,13 @@ public class Sales extends Entity {
 
     public void setSalesmanName(String salesmanName) {
         this.salesmanName = salesmanName;
+    }
+
+    public Double getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Double totalValue) {
+        this.totalValue = totalValue;
     }
 }

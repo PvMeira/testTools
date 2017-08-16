@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class SalesRepository extends AbstractRepository<Sales> {
 
-    private static final SalesRepository Instance = new SalesRepository();
+    private static SalesRepository Instance = new SalesRepository();
 
 
-    private SalesRepository() {
+    public SalesRepository() {
 
     }
 
@@ -21,14 +21,12 @@ public class SalesRepository extends AbstractRepository<Sales> {
         return Instance;
     }
 
-    public List<Sales> getSalesman() {
+    public List<Sales> getSale() {
         return getData();
 
     }
 
-    public long salesmanQuantity() {
-        return getData().stream().distinct().count();
+    public static void setInstance(SalesRepository instance) {
+        Instance = instance;
     }
-
-
 }

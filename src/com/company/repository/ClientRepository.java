@@ -9,9 +9,9 @@ import java.util.List;
  * Created by pvmeira on 15/08/2017.
  */
 public class ClientRepository extends AbstractRepository<Clients> {
-    private static final ClientRepository Instance = new ClientRepository();
+    private static ClientRepository Instance = new ClientRepository();
 
-    private ClientRepository() {
+    public ClientRepository() {
 
     }
 
@@ -24,8 +24,7 @@ public class ClientRepository extends AbstractRepository<Clients> {
 
     }
 
-    public long clientsQuantity() {
-        return getData().stream().distinct().count();
+    public static void setInstance(ClientRepository instance) {
+        Instance = instance;
     }
-
 }

@@ -1,73 +1,33 @@
 package com.company;
 
-import com.company.model.Clients;
-import com.company.model.Sales;
-import com.company.model.Salesman;
-import com.company.repository.ClientRepository;
-import com.company.repository.SalesRepository;
-import com.company.repository.SalesmanRepository;
+import com.company.core.CustomFileWriter;
+import com.company.core.InformationReader;
+import com.company.core.Service;
 
-import java.io.FileReader;
-import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
-    private static final String PATH_VARIABLE = "dados/%s/%s";
 
     public static void main(String[] args) {
-
+        InformationReader informationReader = new InformationReader();
+        CustomFileWriter customFileWriter = new CustomFileWriter();
+        Service service = new Service();
         try {
-            Scanner scanner = new Scanner(new FileReader(String.format(PATH_VARIABLE, "in", "file01.dat")));
-            scanner.useDelimiter(";|\\n|\\r");
-
-            while (scanner.hasNext()) {
-                String id = scanner.next();
-                switch (id) {
-                    case "001":
-                        SalesmanRepository.getInstance().add(
-                                new Salesman(Long.valueOf(id), scanner.next(), scanner.next(), scanner.nextDouble()));
-                        break;
-
-                    case "002":
-                        ClientRepository.getInstance().add(
-                                new Clients(Long.valueOf(id), scanner.next(), scanner.next(), scanner.next()));
-                        break;
-
-                    case "003":
-                        SalesRepository.getInstance().add(
-                                new Sales(Long.valueOf(id), scanner.nextLong(), scanner.nextLong(),
-                                        scanner.nextInt(), scanner.nextDouble(), scanner.next()));
-                        break;
-
-                    default:
-                        System.out.println("Non");
-                        break;
-
-                }
-                ClientRepository clientRepository = ClientRepository.getInstance();
-                long count = clientRepository.getClients().stream().count();
-                System.out.println(count);
-
+            DirectoryStream<Path> paths = Files.newDirectoryStream(Paths.get("dados/in/"),
+                    path -> path.toString().endsWith(".dat"));
+            for (Path p : paths) {
+                informationReader.readFiles(p.getFileName().toString());
+                customFileWriter.FileWriter(p.getFileName().toString());
+                service.cleanRepositories();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    private static void fillOutFile() {
-//        FileWriter fileWriter = new FileWriter();
-
-    }
-
-    private static void fillSale() {
-
-    }
-
-    private static void fillClients() {
-
-    }
-
-    private static void fillSalesman() {
 
     }
 }

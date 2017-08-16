@@ -6,10 +6,10 @@ import java.util.List;
 
 public class SalesmanRepository extends AbstractRepository<Salesman> {
 
-    private static final SalesmanRepository Instance = new SalesmanRepository();
+    private static SalesmanRepository Instance = new SalesmanRepository();
 
 
-    private SalesmanRepository() {
+    public SalesmanRepository() {
 
     }
 
@@ -22,9 +22,7 @@ public class SalesmanRepository extends AbstractRepository<Salesman> {
 
     }
 
-    public long salesmanQuantity() {
-        return getData().stream().distinct().count();
+    public static void setInstance(SalesmanRepository instance) {
+        Instance = instance;
     }
-
-
 }
